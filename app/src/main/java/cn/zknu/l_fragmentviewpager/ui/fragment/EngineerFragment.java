@@ -14,7 +14,7 @@ import cn.zknu.l_fragmentviewpager.R;
  */
 public class EngineerFragment extends Fragment {
 
-
+    private static final String TAG ="EngineerFragment";
     public EngineerFragment() {
         // Required empty public constructor
     }
@@ -22,9 +22,8 @@ public class EngineerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstaneState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_engineer, container, false);
     }
-
 }

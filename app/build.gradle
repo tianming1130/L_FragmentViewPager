@@ -28,4 +28,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.2'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }

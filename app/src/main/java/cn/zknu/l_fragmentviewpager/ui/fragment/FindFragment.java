@@ -5,67 +5,50 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.zknu.l_fragmentviewpager.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FindFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FindFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private String mParam1;
-
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
+    private List<Fragment> mFragments;
+    private static final int NUM_OF_TAB = 2;
 
     public FindFragment() {
         // Required empty public constructor
-    }
-
-    public static FindFragment newInstance(String param1) {
-        FindFragment fragment = new FindFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_find, container, false);
+        View view = inflater.inflate(R.layout.fragment_find, container, false);
 
-        tabLayout = (TabLayout)view.findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("文史"));
-        tabLayout.addTab(tabLayout.newTab().setText("理工"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
+        mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
 
-        viewPager = (ViewPager) view.findViewById(R.id.view_pager);
-        final PagerAdapter adapter = new PagerAdapter
-                (getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        init();
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager());
+        mViewPager.setAdapter(adapter);
+        mTabLayout.setupWithViewPager(mViewPager); //此行代码必须放在下面两行代码前边
+
+        mTabLayout.getTabAt(0).setText("文史");
+        mTabLayout.getTabAt(1).setText("理工");
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                mViewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -81,30 +64,27 @@ public class FindFragment extends Fragment {
         return view;
     }
 
-    private class PagerAdapter extends FragmentStatePagerAdapter{
-        int nNumOfTabs;
-        public PagerAdapter(FragmentManager fm, int nNumOfTabs)
-        {
+    private void init() {
+        mFragments = new ArrayList<>();
+
+        mFragments.add(new LiteratureFragment());
+        mFragments.add(new EngineerFragment());
+
+    }
+
+    private class PagerAdapter extends FragmentPagerAdapter {
+        public PagerAdapter(FragmentManager fm) {
             super(fm);
-            this.nNumOfTabs=nNumOfTabs;
         }
+
         @Override
         public Fragment getItem(int position) {
-            switch(position)
-            {
-                case 0:
-                    LiteratureFragment tab1=new LiteratureFragment();
-                    return tab1;
-                case 1:
-                    EngineerFragment tab2=new EngineerFragment();
-                    return tab2;
-            }
-            return null;
+           return mFragments.get(position);
         }
 
         @Override
         public int getCount() {
-            return nNumOfTabs;
+            return NUM_OF_TAB;
         }
     }
 }
