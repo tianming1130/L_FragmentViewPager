@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.zknu.l_fragmentviewpager.R;
-import cn.zknu.l_fragmentviewpager.adapter.MenuListAdapter;
+import cn.zknu.l_fragmentviewpager.adapter.CollegeListAdapter;
 
 
 public class LiteratureFragment extends Fragment{
     private RecyclerView mRecyclerView;
     private View mView;
     private LinearLayoutManager mLinearLayoutManager;
-    private MenuListAdapter mMenuAdapter;
+    private CollegeListAdapter mMenuAdapter;
     private List<String> mCollegeList;
 
     private static final String TAG = "LiteratureFragment";
@@ -50,7 +50,7 @@ public class LiteratureFragment extends Fragment{
     private void initView() {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mMenuAdapter = new MenuListAdapter(R.layout.item_view, mCollegeList);
+        mMenuAdapter = new CollegeListAdapter(R.layout.item_view, mCollegeList);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(mMenuAdapter);
     }

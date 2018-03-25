@@ -14,10 +14,10 @@ import cn.zknu.l_fragmentviewpager.R;
  * Created by Administrator on 2018\3\21 0021.
  */
 
-public class MenuListAdapter extends BaseQuickAdapter<String,BaseViewHolder>{
+public class CollegeListAdapter extends BaseQuickAdapter<String,BaseViewHolder>{
 
 
-    public MenuListAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
+    public CollegeListAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
         super(layoutResId, data);
     }
 

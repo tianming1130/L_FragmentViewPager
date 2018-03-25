@@ -20,7 +20,6 @@ public class CircleFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_circle, container, false);
         return view;
-
     }
 
 }
