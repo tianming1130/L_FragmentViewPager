@@ -27,8 +27,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mBottomNavigationBar = (BottomNavigationBar) findViewById(R.id.btm_nav_bar);
+        initView();
         init();
+    }
+
+    private void initView() {
+        mBottomNavigationBar = (BottomNavigationBar) findViewById(R.id.btm_nav_bar);
     }
 
     private void init() {

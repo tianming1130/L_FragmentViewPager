@@ -21,8 +21,8 @@ public class FindFragment extends Fragment {
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private List<Fragment> mFragments;
-    private static final int NUM_OF_TAB = 2;
-
+    private View mView;
+    private String[] titles={"文史","理工"};
     public FindFragment() {
         // Required empty public constructor
     }
@@ -31,37 +31,15 @@ public class FindFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_find, container, false);
-
-        mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
-        mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
-
+        mView = inflater.inflate(R.layout.fragment_find, container, false);
+        initView();
         init();
+       return mView;
+    }
 
-        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager());
-        mViewPager.setAdapter(adapter);
-        mTabLayout.setupWithViewPager(mViewPager); //此行代码必须放在下面两行代码前边
-
-        mTabLayout.getTabAt(0).setText("文史");
-        mTabLayout.getTabAt(1).setText("理工");
-
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        return view;
+    private void initView() {
+        mTabLayout = (TabLayout) mView.findViewById(R.id.tab_layout);
+        mViewPager = (ViewPager) mView.findViewById(R.id.view_pager);
     }
 
     private void init() {
@@ -69,6 +47,14 @@ public class FindFragment extends Fragment {
 
         mFragments.add(new LiteratureFragment());
         mFragments.add(new EngineerFragment());
+
+        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager());
+        mViewPager.setAdapter(adapter);
+
+        mTabLayout.setupWithViewPager(mViewPager); //此行代码必须放在下面两行代码前边
+
+        mTabLayout.getTabAt(0).setText("文史");
+        mTabLayout.getTabAt(1).setText("理工");
 
     }
 
@@ -84,7 +70,12 @@ public class FindFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return NUM_OF_TAB;
+            return mFragments.size();
         }
+
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            return titles[position];
+//        }
     }
 }
